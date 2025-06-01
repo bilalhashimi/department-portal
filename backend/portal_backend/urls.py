@@ -15,8 +15,36 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.http import JsonResponse
+
+
+def api_health(request):
+    """Health check endpoint"""
+    return JsonResponse({
+        'status': 'healthy',
+        'message': 'Department Portal API is running',
+        'version': '1.0.0'
+    })
+
 
 urlpatterns = [
+    # Admin interface
     path('admin/', admin.site.urls),
+    
+    # Health check
+    path('', api_health, name='api_health'),
+    path('health/', api_health, name='api_health_check'),
+    
+    # API endpoints
+    path('api/v1/accounts/', include('accounts.urls')),
+    path('api/v1/departments/', include('departments.urls')),
+    path('api/v1/documents/', include('documents.urls')),
 ]
+
+# Serve media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

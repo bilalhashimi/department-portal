@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: dwportal
+      POSTGRES_USER: dwadmin
+      POSTGRES_PASSWORD: dwadminpw
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dwadmin -d dwportal"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Vector Database (Qdrant)
+  vector_db:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+      - "6334:6334"  # Admin interface
+    volumes:
+      - qdrant_data:/qdrant/storage
+    environment:
+      QDRANT__SERVICE__HTTP_PORT: 6333
+      QDRANT__SERVICE__GRPC_PORT: 6334
+
+  # Redis for caching (optional but recommended)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  # Backend API
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DB_HOST=postgres
+      - DB_NAME=dwportal
+      - DB_USER=dwadmin
+      - DB_PASSWORD=dwadminpw
+      - VECTOR_DB_URL=http://vector_db:6333
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      vector_db:
+        condition: service_started
+      redis:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+      - media_files:/app/media
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://192.168.7.230:8000/api/v1
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  # Celery Worker for background tasks
+  celery:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    command: celery -A portal_backend worker --loglevel=info
+    environment:
+      - DEBUG=True
+      - DB_HOST=postgres
+      - DB_NAME=dwportal
+      - DB_USER=dwadmin
+      - DB_PASSWORD=dwadminpw
+      - VECTOR_DB_URL=http://vector_db:6333
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      vector_db:
+        condition: service_started
+      redis:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+      - media_files:/app/media
+
+  # Ollama for AI Document Assistant
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_MODELS=/root/.ollama/models
+    # Note: Using Phi3 Mini (3.8B params) - smaller and faster than Llama
+
+volumes:
+  postgres_data:
+  qdrant_data:
+  redis_data:
+  media_files:
+  ollama_data: 

@@ -1,0 +1,20 @@
+
+                    Cloud computing has transformed how organizations design and deploy applications. This document explores 
+                    common architectural patterns and best practices for cloud-native applications.
+                    
+                    Microservices architecture enables scalable and maintainable applications by decomposing monolithic 
+                    systems into smaller, independent services. Each microservice can be developed, deployed, and scaled 
+                    independently, improving overall system resilience and flexibility.
+                    
+                    Containerization with Docker and orchestration with Kubernetes provide consistent deployment environments 
+                    and automated scaling capabilities. Service mesh technologies like Istio enable secure communication 
+                    between microservices and provide observability features.
+                    
+                    Serverless computing allows developers to focus on business logic without managing infrastructure. 
+                    Functions-as-a-Service (FaaS) platforms automatically scale based on demand and charge only for 
+                    actual usage, making them cost-effective for event-driven applications.
+                    
+                    DevOps practices, including continuous integration and continuous deployment (CI/CD), enable rapid 
+                    and reliable software delivery. Infrastructure as Code (IaC) tools like Terraform ensure consistent 
+                    and reproducible infrastructure deployments.
+                    

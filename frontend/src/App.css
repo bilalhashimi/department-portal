@@ -1,42 +1,418 @@
+/* Gmail-like Document Portal Styling */
+
 #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-}
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
+/* Remove default margins and setup full height layout */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-@keyframes logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Mobile viewport fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific styles */
+  #root {
+    height: -webkit-fill-available;
+  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-        animation: logo-spin infinite 20s linear;
-    }
+/* Touch-friendly button sizing */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.card {
-    padding: 2em;
+/* Line clamp utility for multi-line text truncation */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
-.read-the-docs {
-    color: #888;
+/* Improved button styles with better mobile support */
+.btn-primary {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-height: 44px; /* iOS touch target minimum */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-primary:active {
+  background-color: #1e40af;
+}
+
+.btn-primary:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #374151;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-height: 44px; /* iOS touch target minimum */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-secondary:hover {
+  background-color: #f9fafb;
+}
+
+.btn-secondary:active {
+  background-color: #f3f4f6;
+}
+
+/* Improved input field styles */
+.input-field {
+  width: 100%;
+  padding: 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  min-height: 44px; /* iOS touch target minimum */
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Custom scrollbar for webkit browsers */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Mobile-friendly scrollbars */
+@media (max-width: 768px) {
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
+/* Smooth transitions for hover effects */
+.hover-transition {
+  transition: all 0.15s ease-in-out;
+}
+
+/* Gmail-like selection styling */
+.document-row:hover {
+  background-color: #f8fafc;
+}
+
+.document-row.selected {
+  background-color: #eff6ff;
+}
+
+.document-row:active {
+  background-color: #e0e7ff;
+}
+
+/* Search input focus ring */
+.search-input:focus-within {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar active item */
+.sidebar-item-active {
+  background-color: #fef3c7;
+  color: #92400e;
+  font-weight: 500;
+}
+
+/* Document list toolbar */
+.toolbar-shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  /* Hide sidebar by default on mobile */
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    transition: left 0.3s ease-in-out;
+    z-index: 40;
+    width: 320px;
+    max-width: 90vw;
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* Ensure mobile sidebar is scrollable with proper height */
+  .mobile-sidebar-content {
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+    position: relative;
+  }
+
+  /* Mobile sidebar scrollable area optimization */
+  .mobile-sidebar-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    height: 100%;
+    position: relative;
+  }
+
+  /* Fix for iOS Safari scrolling issues */
+  .mobile-sidebar-scroll::-webkit-scrollbar {
+    width: 3px;
+    background: transparent;
+  }
+
+  .mobile-sidebar-scroll::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.5);
+    border-radius: 2px;
+  }
+
+  /* Prevent scroll bounce on iOS */
+  .mobile-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    will-change: scroll-position;
+    transform: translate3d(0, 0, 0); /* Force hardware acceleration */
+    backface-visibility: hidden;
+    perspective: 1000px;
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Ensure scrolling works on all mobile browsers */
+  .mobile-scroll-container::-webkit-scrollbar {
+    width: 2px;
+    background: transparent;
+  }
+
+  .mobile-scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.3);
+    border-radius: 1px;
+  }
+
+  .mobile-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Adjust padding for mobile */
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Larger text for better readability on mobile */
+  .mobile-text {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Better spacing for mobile touch targets */
+  .mobile-touch-target {
+    min-height: 44px;
+    padding: 0.75rem;
+  }
+
+  /* Prevent zoom on input focus (iOS) */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Ensure proper scrolling for mobile content */
+  .mobile-scroll {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+  }
+
+  /* Mobile-specific sidebar improvements */
+  .mobile-sidebar-header {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2);
+  }
+
+  .mobile-sidebar-button {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transform: translateY(0);
+    transition: all 0.2s ease;
+  }
+
+  .mobile-sidebar-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+  }
+
+  /* Better mobile menu item styling */
+  .mobile-menu-item {
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-bottom: 4px;
+    transition: all 0.2s ease;
+    background: transparent;
+    border: 1px solid transparent;
+  }
+
+  .mobile-menu-item:active {
+    transform: scale(0.98);
+    background: rgba(37, 99, 235, 0.05);
+  }
+
+  .mobile-menu-item.active {
+    background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+    border-color: #93c5fd;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.625rem 1rem;
+  }
+}
+
+/* High resolution mobile displays */
+@media (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+  .input-field {
+    border-width: 0.5px;
+  }
+}
+
+/* Fix for mobile viewport height issues */
+@media (max-height: 600px) {
+  .document-list {
+    height: calc(100vh - 140px);
+    overflow-y: auto;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+  .mobile-landscape-adjust {
+    height: calc(100vh - 60px);
+  }
+  
+  /* Adjust sidebar for landscape mode */
+  .mobile-sidebar-content {
+    height: 100vh;
+    max-height: 100vh;
+  }
+}
+
+/* Improved mobile scrolling performance */
+@media (max-width: 768px) {
+  .mobile-scroll-optimized {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: scroll-position;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+}
+
+/* Dark mode support (if needed later) */
+@media (prefers-color-scheme: dark) {
+  /* Add dark mode styles here if needed */
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus improvements for accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users */
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
 }

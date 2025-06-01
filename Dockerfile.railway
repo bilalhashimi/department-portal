@@ -1,0 +1,106 @@
+# Multi-stage Railway Dockerfile for Department Portal
+FROM node:18-alpine as frontend-build
+
+# Build Frontend
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm ci --only=production
+COPY frontend/ ./
+RUN npm run build
+
+# Python Backend with Frontend
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
+
+# Set work directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    nginx \
+    supervisor \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn psycopg2-binary
+
+# Copy backend
+COPY backend/ ./
+
+# Copy built frontend
+COPY --from=frontend-build /app/frontend/dist ./static/
+
+# Create nginx config
+RUN echo 'server { \
+    listen 80; \
+    server_name _; \
+    location / { \
+        root /app/static; \
+        try_files $uri $uri/ /index.html; \
+    } \
+    location /api/ { \
+        proxy_pass http://127.0.0.1:8000; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+    } \
+    location /admin/ { \
+        proxy_pass http://127.0.0.1:8000; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+    } \
+    location /media/ { \
+        proxy_pass http://127.0.0.1:8000; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+    } \
+}' > /etc/nginx/sites-available/default
+
+# Create supervisor config
+RUN echo '[supervisord] \n\
+nodaemon=true \n\
+[program:django] \n\
+command=gunicorn --bind 127.0.0.1:8000 --workers 2 portal_backend.wsgi:application \n\
+directory=/app \n\
+autostart=true \n\
+autorestart=true \n\
+[program:nginx] \n\
+command=nginx -g "daemon off;" \n\
+autostart=true \n\
+autorestart=true' > /etc/supervisor/conf.d/supervisord.conf
+
+# Create media directory and collect static files
+RUN mkdir -p /app/media
+RUN python manage.py collectstatic --noinput || echo "No static files to collect"
+
+# Expose port for Railway
+EXPOSE $PORT
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:80/ || exit 1
+
+# Start script
+RUN echo '#!/bin/bash \n\
+echo "Starting Department Portal on Railway..." \n\
+python manage.py migrate --noinput || echo "Migration failed" \n\
+nginx -t && echo "Nginx config OK" \n\
+exec supervisord -c /etc/supervisor/conf.d/supervisord.conf' > /start.sh
+
+RUN chmod +x /start.sh
+
+CMD ["/start.sh"] 
