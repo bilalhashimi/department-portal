@@ -205,6 +205,38 @@ function App() {
     }
   };
 
+  const handleDocumentDelete = async (documentId: string) => {
+    try {
+      if (confirm('Are you sure you want to delete this document?')) {
+        await apiService.deleteDocument(documentId);
+        
+        // Remove the document from local state
+        setDocuments(prevDocs => 
+          prevDocs.filter(doc => doc.document.id !== documentId)
+        );
+        
+        console.log('Document deleted:', documentId);
+      }
+    } catch (error) {
+      console.error('Error deleting document:', error);
+    }
+  };
+
+  const handleDocumentsBulkDelete = async (documentIds: string[]) => {
+    try {
+      await apiService.deleteDocuments(documentIds);
+      
+      // Remove the documents from local state
+      setDocuments(prevDocs => 
+        prevDocs.filter(doc => !documentIds.includes(doc.document.id))
+      );
+      
+      console.log('Documents deleted:', documentIds);
+    } catch (error) {
+      console.error('Error deleting documents:', error);
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoggingIn(true);
@@ -528,6 +560,8 @@ function App() {
                 onDocumentView={handleDocumentView}
                 onDocumentDownload={handleDocumentDownload}
                 onDocumentToggleImportant={handleDocumentToggleImportant}
+                onDocumentDelete={handleDocumentDelete}
+                onDocumentsBulkDelete={handleDocumentsBulkDelete}
                 isLoading={isSearching}
                 selectedView={selectedView}
                 isMobile={isMobile}

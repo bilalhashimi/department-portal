@@ -15,6 +15,7 @@ urlpatterns = [
     path('', views.DocumentListView.as_view(), name='document_list'),
     path('create/', views.DocumentCreateView.as_view(), name='document_create'),
     path('search/', views.document_search, name='document_search'),
+    path('stats/', views.document_stats, name='document_stats'),
     path('chat/', views.ai_chat, name='ai_chat'),
     path('bulk-action/', views.bulk_document_action, name='bulk_action'),
     path('<uuid:pk>/', views.DocumentDetailView.as_view(), name='document_detail'),

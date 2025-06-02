@@ -6,6 +6,8 @@ interface DocumentListProps {
   onDocumentSelect?: (documentId: string) => void;
   onDocumentView?: (documentId: string) => void;
   onDocumentDownload?: (documentId: string) => void;
+  onDocumentDelete?: (documentId: string) => void;
+  onDocumentsBulkDelete?: (documentIds: string[]) => void;
   onDocumentToggleImportant?: (documentId: string, isImportant: boolean) => void;
   isLoading?: boolean;
   selectedView: string;
@@ -14,9 +16,9 @@ interface DocumentListProps {
 
 const DocumentList: React.FC<DocumentListProps> = ({
   documents,
-  onDocumentSelect,
   onDocumentView,
   onDocumentDownload,
+  onDocumentsBulkDelete,
   onDocumentToggleImportant,
   isLoading = false,
   selectedView,
@@ -141,12 +143,28 @@ const DocumentList: React.FC<DocumentListProps> = ({
             
             {selectedDocuments.size > 0 && (
               <div className="flex items-center space-x-2">
-                <button className="text-gray-500 hover:text-gray-700 p-1 touch-manipulation">
+                <button 
+                  className="text-gray-500 hover:text-red-600 p-1 touch-manipulation"
+                  onClick={() => {
+                    if (confirm(`Delete ${selectedDocuments.size} selected document(s)?`)) {
+                      onDocumentsBulkDelete?.(Array.from(selectedDocuments));
+                      setSelectedDocuments(new Set());
+                    }
+                  }}
+                  title="Delete selected documents"
+                >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
                 </button>
-                <button className="text-gray-500 hover:text-gray-700 p-1 touch-manipulation">
+                <button 
+                  className="text-gray-500 hover:text-blue-600 p-1 touch-manipulation"
+                  onClick={() => {
+                    Array.from(selectedDocuments).forEach(id => onDocumentDownload?.(id));
+                    setSelectedDocuments(new Set());
+                  }}
+                  title="Download selected documents"
+                >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>

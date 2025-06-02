@@ -5,20 +5,25 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.contrib.auth.hashers import make_password, check_password
 import logging
 from .models import User, UserProfile, LoginAttempt
 from .serializers import (
     UserSerializer, UserListSerializer, UserProfileSerializer,
     LoginSerializer, ChangePasswordSerializer, UserProfileUpdateSerializer,
-    LoginAttemptSerializer
+    LoginAttemptSerializer, GroupSerializer, GroupMemberSerializer, GroupListSerializer
 )
+from .permissions import CanManageUsers
 
 # Setup security logging
 security_logger = logging.getLogger('security')
+logger = logging.getLogger(__name__)
 
 
 class EnhancedAccessToken(AccessToken):
@@ -541,3 +546,283 @@ class LogoutView(APIView):
                 {'error': 'Invalid token'},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class GroupListView(generics.ListAPIView):
+    """List all groups"""
+    queryset = Group.objects.all()
+    serializer_class = GroupListSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        """Filter groups based on user permissions"""
+        user = self.request.user
+        if user.role == 'admin':
+            return Group.objects.all()
+        elif user.role == 'department_head':
+            # Department heads can see groups they manage
+            return Group.objects.filter(
+                Q(user__id=user.id) | Q(name__icontains='department')
+            ).distinct()
+        else:
+            # Regular users can see groups they belong to
+            return user.groups.all()
+
+
+class GroupDetailView(generics.RetrieveAPIView):
+    """Get group details"""
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupCreateView(generics.CreateAPIView):
+    """Create a new group"""
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated, CanManageUsers]
+    
+    def perform_create(self, serializer):
+        """Enhanced group creation with role checks and logging"""
+        user = self.request.user
+        
+        # Check permissions
+        if user.role not in ['admin', 'department_head']:
+            security_logger.warning(
+                f"Unauthorized group creation attempt by {user.email} (role: {user.role})"
+            )
+            raise permissions.PermissionDenied("You don't have permission to create groups")
+        
+        # Save the group
+        group = serializer.save()
+        
+        # Log group creation
+        security_logger.info(
+            f"Group created: {group.name} by {user.email}"
+        )
+
+
+class GroupUpdateView(generics.UpdateAPIView):
+    """Update a group"""
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated, CanManageUsers]
+    
+    def perform_update(self, serializer):
+        """Enhanced group update with role checks and logging"""
+        user = self.request.user
+        target_group = self.get_object()
+        
+        # Users can update their own group
+        if target_group.id == user.id:
+            # Users can only update certain fields for themselves
+            allowed_fields = ['name']
+            for field in serializer.validated_data:
+                if field not in allowed_fields:
+                    raise permissions.PermissionDenied(f"You cannot update the '{field}' field")
+        else:
+            # Only admin and department heads can update other groups
+            if user.role not in ['admin', 'department_head']:
+                security_logger.warning(
+                    f"Unauthorized group update attempt: {user.email} tried to update {target_group.name}"
+                )
+                raise permissions.PermissionDenied("You don't have permission to update other groups")
+        
+        # Save changes
+        old_name = target_group.name
+        updated_group = serializer.save()
+        new_name = updated_group.name
+        
+        # Log group changes
+        if old_name != new_name:
+            security_logger.info(
+                f"Group updated: {updated_group.name} name changed from {old_name} to {new_name} by {user.email}"
+            )
+        else:
+            security_logger.info(f"Group updated: {updated_group.name} by {user.email}")
+
+
+class GroupDeleteView(generics.DestroyAPIView):
+    """Delete a group"""
+    queryset = Group.objects.all()
+    permission_classes = [permissions.IsAuthenticated, CanManageUsers]
+    
+    def perform_destroy(self, instance):
+        """Enhanced group deletion with role checks and logging"""
+        user = self.request.user
+        
+        # Only admin can delete groups
+        if user.role != 'admin':
+            security_logger.warning(
+                f"Unauthorized group deletion attempt by {user.email} (role: {user.role})"
+            )
+            raise permissions.PermissionDenied("Only administrators can delete groups")
+        
+        # Prevent deleting the last admin group
+        if instance.id == user.id:
+            security_logger.warning(
+                f"Unauthorized group deletion attempt: {user.email} attempted to delete the last admin group"
+            )
+            raise permissions.PermissionDenied("Cannot delete the last admin group")
+        
+        # Delete the group
+        instance.delete()
+        
+        # Log group deletion
+        security_logger.info(
+            f"Group deleted: {instance.name} by {user.email}"
+        )
+
+
+class GroupMemberAddView(generics.CreateAPIView):
+    """Add a member to a group"""
+    queryset = Group.objects.all()
+    serializer_class = GroupMemberSerializer
+    permission_classes = [permissions.IsAuthenticated, CanManageUsers]
+    
+    def perform_create(self, serializer):
+        """Enhanced group member addition with role checks and logging"""
+        user = self.request.user
+        group = self.get_object()
+        
+        # Check permissions
+        if user.role not in ['admin', 'department_head']:
+            security_logger.warning(
+                f"Unauthorized group member addition attempt by {user.email} (role: {user.role})"
+            )
+            raise permissions.PermissionDenied("You don't have permission to add members to groups")
+        
+        # Save the group member
+        serializer.save(group=group)
+        
+        # Log group member addition
+        security_logger.info(
+            f"Group member added: {serializer.validated_data['user']} to {group.name} by {user.email}"
+        )
+
+
+class GroupMemberRemoveView(generics.DestroyAPIView):
+    """Remove a member from a group"""
+    queryset = Group.objects.all()
+    serializer_class = GroupMemberSerializer
+    permission_classes = [permissions.IsAuthenticated, CanManageUsers]
+    
+    def perform_destroy(self, instance):
+        """Enhanced group member removal with role checks and logging"""
+        user = self.request.user
+        group = self.get_object()
+        
+        # Check permissions
+        if user.role not in ['admin', 'department_head']:
+            security_logger.warning(
+                f"Unauthorized group member removal attempt by {user.email} (role: {user.role})"
+            )
+            raise permissions.PermissionDenied("You don't have permission to remove members from groups")
+        
+        # Prevent removing the last admin from the group
+        if instance.role == 'admin':
+            security_logger.warning(
+                f"Unauthorized group member removal attempt: {user.email} attempted to remove the last admin from {group.name}"
+            )
+            raise permissions.PermissionDenied("Cannot remove the last admin from the group")
+        
+        # Delete the group member
+        instance.delete()
+        
+        # Log group member removal
+        security_logger.info(
+            f"Group member removed: {instance.user} from {group.name} by {user.email}"
+        )
+
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def add_user_to_group(request, group_id):
+    """Add a user to a group"""
+    user = request.user
+    
+    # Check permissions
+    if user.role not in ['admin', 'department_head']:
+        return Response(
+            {'error': 'You do not have permission to manage groups'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    
+    try:
+        group = Group.objects.get(id=group_id)
+        user_id = request.data.get('user_id')
+        
+        if not user_id:
+            return Response(
+                {'error': 'user_id is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        target_user = User.objects.get(id=user_id, is_active=True)
+        group.user_set.add(target_user)
+        
+        security_logger.info(
+            f"User {target_user.email} added to group {group.name} by {user.email}"
+        )
+        
+        return Response({
+            'message': f'User {target_user.get_full_name()} added to group {group.name}',
+            'group': GroupSerializer(group).data
+        })
+        
+    except Group.DoesNotExist:
+        return Response(
+            {'error': 'Group not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    except User.DoesNotExist:
+        return Response(
+            {'error': 'User not found or inactive'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+
+@api_view(['DELETE'])
+@permission_classes([permissions.IsAuthenticated])
+def remove_user_from_group(request, group_id, user_id):
+    """Remove a user from a group"""
+    user = request.user
+    
+    # Check permissions
+    if user.role not in ['admin', 'department_head']:
+        return Response(
+            {'error': 'You do not have permission to manage groups'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    
+    try:
+        group = Group.objects.get(id=group_id)
+        target_user = User.objects.get(id=user_id, is_active=True)
+        
+        if target_user not in group.user_set.all():
+            return Response(
+                {'error': 'User is not a member of this group'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        group.user_set.remove(target_user)
+        
+        security_logger.info(
+            f"User {target_user.email} removed from group {group.name} by {user.email}"
+        )
+        
+        return Response({
+            'message': f'User {target_user.get_full_name()} removed from group {group.name}',
+            'group': GroupSerializer(group).data
+        })
+        
+    except Group.DoesNotExist:
+        return Response(
+            {'error': 'Group not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    except User.DoesNotExist:
+        return Response(
+            {'error': 'User not found or inactive'},
+            status=status.HTTP_404_NOT_FOUND
+        )

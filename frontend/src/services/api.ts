@@ -165,7 +165,7 @@ class ApiService {
         credentials
       );
 
-      const { access, refresh, user } = response.data;
+      const { access, refresh } = response.data;
       this.setTokens(access, refresh);
 
       toast.success('Login successful!');
@@ -481,12 +481,37 @@ class ApiService {
 
   async updateDocumentPriority(id: string, priority: string): Promise<Document> {
     try {
-      const response: AxiosResponse<Document> = await this.api.patch(`/documents/${id}/`, {
+      const response: AxiosResponse<Document> = await this.api.patch(`/documents/${id}/update/`, {
         priority: priority
       });
       return response.data;
     } catch (error) {
       toast.error('Failed to update document priority');
+      throw error;
+    }
+  }
+
+  async deleteDocument(id: string, showToast: boolean = true): Promise<void> {
+    try {
+      await this.api.delete(`/documents/${id}/delete/`);
+      if (showToast) {
+        toast.success('Document deleted successfully');
+      }
+    } catch (error) {
+      if (showToast) {
+        toast.error('Failed to delete document');
+      }
+      throw error;
+    }
+  }
+
+  async deleteDocuments(ids: string[]): Promise<void> {
+    try {
+      // Delete documents one by one without individual toast messages
+      await Promise.all(ids.map(id => this.deleteDocument(id, false)));
+      toast.success(`${ids.length} document(s) deleted successfully`);
+    } catch (error) {
+      toast.error('Failed to delete documents');
       throw error;
     }
   }
@@ -534,6 +559,88 @@ class ApiService {
       const response = await axios.get(`${this.baseURL.replace('/api/v1', '')}/health/`);
       return response.data;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  // Group management
+  async getGroups(): Promise<any[]> {
+    try {
+      const response = await this.api.get('/accounts/groups/');
+      return response.data.results || response.data;
+    } catch (error) {
+      console.error('Failed to fetch groups:', error);
+      return [];
+    }
+  }
+
+  async getGroup(id: string): Promise<any> {
+    try {
+      const response = await this.api.get(`/accounts/groups/${id}/`);
+      return response.data;
+    } catch (error) {
+      toast.error('Failed to fetch group details');
+      throw error;
+    }
+  }
+
+  async createGroup(groupData: any): Promise<any> {
+    try {
+      const response = await this.api.post('/accounts/groups/create/', groupData);
+      toast.success('Group created successfully!');
+      return response.data;
+    } catch (error: any) {
+      const message = error.response?.data?.error || 'Failed to create group';
+      toast.error(message);
+      throw error;
+    }
+  }
+
+  async updateGroup(id: string, groupData: any): Promise<any> {
+    try {
+      const response = await this.api.patch(`/accounts/groups/${id}/update/`, groupData);
+      toast.success('Group updated successfully!');
+      return response.data;
+    } catch (error: any) {
+      const message = error.response?.data?.error || 'Failed to update group';
+      toast.error(message);
+      throw error;
+    }
+  }
+
+  async deleteGroup(id: string): Promise<void> {
+    try {
+      await this.api.delete(`/accounts/groups/${id}/delete/`);
+      toast.success('Group deleted successfully');
+    } catch (error: any) {
+      const message = error.response?.data?.error || 'Failed to delete group';
+      toast.error(message);
+      throw error;
+    }
+  }
+
+  async addUserToGroup(groupId: string, userId: string): Promise<any> {
+    try {
+      const response = await this.api.post(`/accounts/groups/${groupId}/add-user/`, {
+        user_id: userId
+      });
+      toast.success('User added to group successfully!');
+      return response.data;
+    } catch (error: any) {
+      const message = error.response?.data?.error || 'Failed to add user to group';
+      toast.error(message);
+      throw error;
+    }
+  }
+
+  async removeUserFromGroup(groupId: string, userId: string): Promise<any> {
+    try {
+      const response = await this.api.delete(`/accounts/groups/${groupId}/remove-user/${userId}/`);
+      toast.success('User removed from group successfully!');
+      return response.data;
+    } catch (error: any) {
+      const message = error.response?.data?.error || 'Failed to remove user from group';
+      toast.error(message);
       throw error;
     }
   }

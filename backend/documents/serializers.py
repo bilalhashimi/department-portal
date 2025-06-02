@@ -543,7 +543,7 @@ class DocumentCreateSerializer(serializers.ModelSerializer):
         model = Document
         fields = [
             'title', 'description', 'file', 'category', 'tag_names',
-            'status', 'version', 'is_featured', 'visibility', 
+            'status', 'version', 'visibility', 
             'shared_departments', 'shared_user_emails', 
             'allow_download', 'allow_reshare'
         ]
@@ -557,7 +557,10 @@ class DocumentCreateSerializer(serializers.ModelSerializer):
         allow_reshare = validated_data.pop('allow_reshare', False)
         tag_names = validated_data.pop('tag_names', [])
         
-        validated_data['owned_by'] = self.context['request'].user
+        # Set both created_by and owned_by to the current user
+        user = self.context['request'].user
+        validated_data['created_by'] = user
+        validated_data['owned_by'] = user
         
         document = super().create(validated_data)
         
@@ -652,7 +655,7 @@ class DocumentUpdateSerializer(serializers.ModelSerializer):
         model = Document
         fields = [
             'title', 'description', 'file', 'category', 'tag_names',
-            'status', 'priority', 'version', 'is_featured'
+            'status', 'priority', 'version'
         ]
     
     def update(self, instance, validated_data):

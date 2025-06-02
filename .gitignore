@@ -1,12 +1,325 @@
-# OS files
-.DS_Store
-# Node.js
-frontend/node_modules/
-frontend/build/
-# Python
+# Department Portal - Comprehensive .gitignore
+
+# ======================
+# Python/Django Backend
+# ======================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
 backend/venv/
-**/__pycache__/
-**/*.py[cod]
-# Environment & config
-*.env
-.env* 
+backend/env/
+backend/.venv/
+venv/
+env/
+.venv/
+
+# Django specific
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+
+# Secret keys and sensitive data
+*.key
+*.pem
+*.p12
+secrets.json
+credentials.json
+
+# ======================
+# Node.js/React Frontend
+# ======================
+
+# Dependencies
+frontend/node_modules/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# ======================
+# IDE/Editor Files
+# ======================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ======================
+# Operating System Files
+# ======================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+
+# ======================
+# Backup and Temp Files
+# ======================
+*.bak
+*.backup
+*.tmp
+*.temp
+*.orig
+*.old
+*.swp
+*.swo
+
+# ======================
+# Logs and Databases
+# ======================
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+
+# ======================
+# Security and Keys
+# ======================
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.jks
+*.keystore
+
+# ======================
+# Testing and Coverage
+# ======================
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+
+# ======================
+# Documentation
+# ======================
+docs/_build/
+site/
+
+# ======================
+# Deployment
+# ======================
+.vercel
+.netlify
+
+# ======================
+# Docker
+# ======================
+.dockerignore
+Dockerfile.dev
+
+# ======================
+# Project Specific
+# ======================
+
+# Test files (keeping them tracked for now)
+# test_*.py
+# test_*.js
+# test_*.sh
+
+# Build artifacts
+frontend/dist/
+frontend/build/
+
+# Vector database files
+backend/vector_db/
+*.faiss
+*.index
+
+# Uploaded documents (in development)
+backend/media/documents/
+
+# Cache directories
+.cache/
+__pycache__/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/ 

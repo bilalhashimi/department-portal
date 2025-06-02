@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.models import Group
 from .models import User, UserProfile, LoginAttempt
 
 
@@ -211,4 +212,48 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
     def validate(self, attrs):
         if attrs['new_password'] != attrs['new_password_confirm']:
             raise serializers.ValidationError("Passwords don't match")
-        return attrs 
+        return attrs
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    """Serializer for Django groups"""
+    users = UserListSerializer(many=True, read_only=True, source='user_set')
+    users_count = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Group
+        fields = ['id', 'name', 'permissions', 'users', 'users_count']
+        read_only_fields = ('id',)
+    
+    def get_users_count(self, obj):
+        return obj.user_set.count()
+
+
+class GroupMemberSerializer(serializers.Serializer):
+    """Serializer for adding/removing group members"""
+    user_id = serializers.UUIDField()
+    
+    def validate_user_id(self, value):
+        try:
+            user = User.objects.get(id=value, is_active=True)
+            return user
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User not found or inactive")
+    
+    def create(self, validated_data):
+        group = validated_data['group']
+        user = validated_data['user_id']
+        group.user_set.add(user)
+        return {'group': group, 'user': user}
+
+
+class GroupListSerializer(serializers.ModelSerializer):
+    """Simplified serializer for group lists"""
+    users_count = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Group
+        fields = ['id', 'name', 'users_count']
+    
+    def get_users_count(self, obj):
+        return obj.user_set.count() 

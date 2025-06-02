@@ -9,6 +9,7 @@ PyJWT==2.9.0
 python-dotenv==1.1.0
 sqlparse==0.5.3
 whitenoise==6.5.0
+dj-database-url==2.1.0
 
 # Vector Database and AI Dependencies
 qdrant-client==1.7.3

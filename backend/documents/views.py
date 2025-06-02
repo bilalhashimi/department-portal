@@ -145,12 +145,8 @@ class DocumentCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def post(self, request, *args, **kwargs):
-        # Only admin users can upload documents
-        if request.user.role != 'admin':
-            return Response({
-                'error': 'Only administrators can upload documents'
-            }, status=status.HTTP_403_FORBIDDEN)
-        
+        # Allow all authenticated users to upload documents
+        # Remove the admin-only restriction
         return super().post(request, *args, **kwargs)
     
     def perform_create(self, serializer):

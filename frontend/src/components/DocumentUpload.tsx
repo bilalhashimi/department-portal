@@ -32,14 +32,6 @@ interface Department {
   name: string;
 }
 
-interface User {
-  id: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  full_name: string;
-}
-
 const DocumentUpload: React.FC<DocumentUploadProps> = ({
   isOpen,
   onClose,
@@ -62,8 +54,6 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   const [dragActive, setDragActive] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -71,27 +61,16 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   useEffect(() => {
     if (isOpen) {
       const initializeComponent = async () => {
-        // Check if user is admin
-        const adminStatus = await apiService.isAdmin();
-        setIsAdmin(adminStatus);
+        // Allow all authenticated users to upload documents
+        // Remove admin check
         
-        if (!adminStatus) {
-          // If not admin, close the modal and show error
-          onClose();
-          return;
-        }
-
         // Fetch categories
         const fetchedCategories = await apiService.getCategories();
-        setCategories(fetchedCategories);
+        setCategories(Array.isArray(fetchedCategories) ? fetchedCategories : []);
         
         // Fetch departments for sharing
         const fetchedDepartments = await apiService.getDepartments();
-        setDepartments(fetchedDepartments);
-        
-        // Fetch users for sharing
-        const fetchedUsers = await apiService.getUsers();
-        setUsers(fetchedUsers);
+        setDepartments(Array.isArray(fetchedDepartments) ? fetchedDepartments : []);
         
         // Set first category as default if available
         if (fetchedCategories.length > 0 && !form.category) {
@@ -259,27 +238,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
     onClose();
   };
 
-  // Don't render if user is not admin
-  if (!isAdmin && isOpen) {
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
-          <div className="text-center">
-            <div className="text-6xl mb-4">🚫</div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Access Denied</h2>
-            <p className="text-gray-600 mb-4">Only administrators can upload documents.</p>
-            <button
-              onClick={onClose}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+  // Allow all users to upload documents
   if (!isOpen) return null;
 
   return (
