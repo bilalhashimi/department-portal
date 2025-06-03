@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { apiService } from '../services/api';
 import LoadingSpinner from './LoadingSpinner';
+import { usePermissions } from '../contexts/PermissionsContext';
 
 interface DocumentUploadProps {
   isOpen: boolean;
@@ -37,6 +38,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   onClose,
   onUploadSuccess
 }) => {
+  const { can } = usePermissions();
   const [form, setForm] = useState<UploadForm>({
     title: '',
     description: '',
@@ -57,27 +59,36 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   const [userEmail, setUserEmail] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Permission checks
+  const canCreateDocuments = can('documents.create');
+  const canViewCategories = can('categories.view_all');
+  const canShareDocuments = can('documents.share');
+
   // Check admin status and fetch data when modal opens
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && canCreateDocuments) {
       const initializeComponent = async () => {
         try {
           console.log('🔄 Refreshing categories and departments for document upload...');
           
-          // Always fetch fresh categories
-          const fetchedCategories = await apiService.getCategories();
-          console.log('📂 Fetched categories:', fetchedCategories);
-          setCategories(Array.isArray(fetchedCategories) ? fetchedCategories : []);
+          // Always fetch fresh categories if user can view them
+          if (canViewCategories) {
+            const fetchedCategories = await apiService.getCategories();
+            console.log('📂 Fetched categories:', fetchedCategories);
+            setCategories(Array.isArray(fetchedCategories) ? fetchedCategories : []);
+            
+            // Set first category as default if available and no category selected
+            if (fetchedCategories.length > 0 && !form.category) {
+              console.log('📋 Setting default category:', fetchedCategories[0].name);
+              setForm(prev => ({ ...prev, category: fetchedCategories[0].id }));
+            }
+          }
           
-          // Always fetch fresh departments for sharing
-          const fetchedDepartments = await apiService.getDepartments();
-          console.log('🏢 Fetched departments:', fetchedDepartments);
-          setDepartments(Array.isArray(fetchedDepartments) ? fetchedDepartments : []);
-          
-          // Set first category as default if available and no category selected
-          if (fetchedCategories.length > 0 && !form.category) {
-            console.log('📋 Setting default category:', fetchedCategories[0].name);
-            setForm(prev => ({ ...prev, category: fetchedCategories[0].id }));
+          // Always fetch fresh departments for sharing if user can share
+          if (canShareDocuments) {
+            const fetchedDepartments = await apiService.getDepartments();
+            console.log('🏢 Fetched departments:', fetchedDepartments);
+            setDepartments(Array.isArray(fetchedDepartments) ? fetchedDepartments : []);
           }
         } catch (error) {
           console.error('❌ Error fetching categories/departments:', error);
@@ -88,7 +99,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
       
       initializeComponent();
     }
-  }, [isOpen]); // Remove form.category dependency to always refresh
+  }, [isOpen, canCreateDocuments, canViewCategories, canShareDocuments]); // Remove form.category dependency to always refresh
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -167,6 +178,9 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!canCreateDocuments) {
+      return; // Prevent submission if user doesn't have permission
+    }
     if (!form.file || !form.title) return;
 
     setIsUploading(true);
@@ -181,15 +195,17 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
       formData.append('allow_download', form.allow_download.toString());
       formData.append('allow_reshare', form.allow_reshare.toString());
       
-      // Add department IDs
-      form.shared_departments.forEach(deptId => {
-        formData.append('shared_departments', deptId);
-      });
-      
-      // Add user emails
-      form.shared_user_emails.forEach(email => {
-        formData.append('shared_user_emails', email);
-      });
+      // Add department IDs (only if user can share)
+      if (canShareDocuments) {
+        form.shared_departments.forEach(deptId => {
+          formData.append('shared_departments', deptId);
+        });
+        
+        // Add user emails (only if user can share)
+        form.shared_user_emails.forEach(email => {
+          formData.append('shared_user_emails', email);
+        });
+      }
       
       // Use selected category or first available category
       const categoryId = form.category || (categories.length > 0 ? categories[0].id : '');
@@ -200,25 +216,11 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
       // Call the API service
       await apiService.uploadDocument(formData);
       
-      // Reset form
-      setForm({
-        title: '',
-        description: '',
-        category: categories.length > 0 ? categories[0].id : '',
-        file: null,
-        priority: 'medium',
-        status: 'draft',
-        visibility: 'private',
-        shared_departments: [],
-        shared_user_emails: [],
-        allow_download: true,
-        allow_reshare: false
-      });
+      resetForm();
       onUploadSuccess();
       onClose();
     } catch (error) {
-      console.error('Upload error:', error);
-      // Error message is handled by the API service
+      console.error('Upload failed:', error);
     } finally {
       setIsUploading(false);
     }
@@ -246,8 +248,40 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
     onClose();
   };
 
-  // Allow all users to upload documents
-  if (!isOpen) return null;
+  // Don't render if modal should not be open
+  if (!isOpen) {
+    return null;
+  }
+
+  // Don't render if user doesn't have permission
+  if (!canCreateDocuments) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold text-gray-900">Access Denied</h2>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <p className="text-gray-600 mb-4">
+            You don't have permission to upload documents.
+          </p>
+          <button
+            onClick={onClose}
+            className="btn-primary w-full"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -447,14 +481,14 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
               style={{ color: '#111827', backgroundColor: '#ffffff' }}
             >
               <option value="private">Private (Admin Only)</option>
-              <option value="department">Share with Departments</option>
-              <option value="users">Share with Specific Users</option>
-              <option value="public">Public (Everyone)</option>
+              {canShareDocuments && <option value="department">Share with Departments</option>}
+              {canShareDocuments && <option value="users">Share with Specific Users</option>}
+              {canShareDocuments && <option value="public">Public (Everyone)</option>}
             </select>
           </div>
 
-          {/* Shared Departments - Show only if department visibility selected */}
-          {form.visibility === 'department' && (
+          {/* Shared Departments - Show only if department visibility selected and user can share */}
+          {form.visibility === 'department' && canShareDocuments && (
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
                 Select Departments *
@@ -478,8 +512,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
             </div>
           )}
 
-          {/* Shared User Emails - Show only if users visibility selected */}
-          {form.visibility === 'users' && (
+          {/* Shared User Emails - Show only if users visibility selected and user can share */}
+          {form.visibility === 'users' && canShareDocuments && (
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
                 Add User Emails *
@@ -528,8 +562,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
             </div>
           )}
 
-          {/* Permission Settings - Show for department, users, and public */}
-          {form.visibility !== 'private' && (
+          {/* Permission Settings - Show for department, users, and public only if user can share */}
+          {form.visibility !== 'private' && canShareDocuments && (
             <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
               <h4 className="text-sm font-medium text-gray-700">Permission Settings</h4>
               
