@@ -61,26 +61,34 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   useEffect(() => {
     if (isOpen) {
       const initializeComponent = async () => {
-        // Allow all authenticated users to upload documents
-        // Remove admin check
-        
-        // Fetch categories
-        const fetchedCategories = await apiService.getCategories();
-        setCategories(Array.isArray(fetchedCategories) ? fetchedCategories : []);
-        
-        // Fetch departments for sharing
-        const fetchedDepartments = await apiService.getDepartments();
-        setDepartments(Array.isArray(fetchedDepartments) ? fetchedDepartments : []);
-        
-        // Set first category as default if available
-        if (fetchedCategories.length > 0 && !form.category) {
-          setForm(prev => ({ ...prev, category: fetchedCategories[0].id }));
+        try {
+          console.log('🔄 Refreshing categories and departments for document upload...');
+          
+          // Always fetch fresh categories
+          const fetchedCategories = await apiService.getCategories();
+          console.log('📂 Fetched categories:', fetchedCategories);
+          setCategories(Array.isArray(fetchedCategories) ? fetchedCategories : []);
+          
+          // Always fetch fresh departments for sharing
+          const fetchedDepartments = await apiService.getDepartments();
+          console.log('🏢 Fetched departments:', fetchedDepartments);
+          setDepartments(Array.isArray(fetchedDepartments) ? fetchedDepartments : []);
+          
+          // Set first category as default if available and no category selected
+          if (fetchedCategories.length > 0 && !form.category) {
+            console.log('📋 Setting default category:', fetchedCategories[0].name);
+            setForm(prev => ({ ...prev, category: fetchedCategories[0].id }));
+          }
+        } catch (error) {
+          console.error('❌ Error fetching categories/departments:', error);
+          setCategories([]);
+          setDepartments([]);
         }
       };
       
       initializeComponent();
     }
-  }, [isOpen, form.category, onClose]);
+  }, [isOpen]); // Remove form.category dependency to always refresh
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -342,7 +350,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
               value={form.title}
               onChange={handleInputChange}
               placeholder="Enter document title"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input-field"
+              style={{ color: '#111827', backgroundColor: '#ffffff' }}
               required
             />
           </div>
@@ -359,7 +368,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
               onChange={handleInputChange}
               placeholder="Enter document description (optional)"
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+              className="input-field resize-none"
+              style={{ color: '#111827', backgroundColor: '#ffffff' }}
             />
           </div>
 
@@ -374,7 +384,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
                 name="category"
                 value={form.category}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="input-field"
+                style={{ color: '#111827', backgroundColor: '#ffffff' }}
               >
                 <option value="">Select category</option>
                 {categories.map(cat => (
@@ -392,7 +403,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
                 name="priority"
                 value={form.priority}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="input-field"
+                style={{ color: '#111827', backgroundColor: '#ffffff' }}
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
@@ -412,7 +424,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
               name="status"
               value={form.status}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input-field"
+              style={{ color: '#111827', backgroundColor: '#ffffff' }}
             >
               <option value="draft">Draft</option>
               <option value="review">Under Review</option>
@@ -430,7 +443,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
               name="visibility"
               value={form.visibility}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input-field"
+              style={{ color: '#111827', backgroundColor: '#ffffff' }}
             >
               <option value="private">Private (Admin Only)</option>
               <option value="department">Share with Departments</option>

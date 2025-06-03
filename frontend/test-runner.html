@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings Test Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .test-list {
+            background: #e8f5e8;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        code {
+            background: #f1f1f1;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .button-demo {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧪 Admin Settings Test Suite</h1>
+        <p>Comprehensive testing for Department Portal admin functionality</p>
+    </div>
+
+    <h2>📋 How to Run Tests</h2>
+
+    <div class="step">
+        <h3>Step 1: Start the Application</h3>
+        <p>Make sure both backend and frontend are running:</p>
+        <ul>
+            <li>Backend: <code>docker-compose up</code> (should be on port 8000)</li>
+            <li>Frontend: <code>cd frontend && npm run dev</code> (should be on port 5173 or 5174)</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>Step 2: Login as Admin</h3>
+        <p>Access the application at <code>http://localhost:5173</code> and login with:</p>
+        <ul>
+            <li><strong>Email:</strong> bilalhashimi89@gmail.com</li>
+            <li><strong>Password:</strong> (your admin password)</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>Step 3: Access Test Suite</h3>
+        <p>In the header, you'll see admin-only buttons:</p>
+        <ul>
+            <li><span class="button-demo">⚙️ Settings</span> - Admin Settings Panel</li>
+            <li><span class="button-demo">🧪 Tests</span> - Test Suite (click this!)</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>Step 4: Run Tests</h3>
+        <p>Click the <strong>"▶️ Run All Tests"</strong> button to execute the full test suite.</p>
+    </div>
+
+    <h2>🔬 What Gets Tested</h2>
+
+    <div class="test-list">
+        <h3>Core Functionality Tests:</h3>
+        <ul>
+            <li>✅ Authentication & Admin Permissions</li>
+            <li>✅ User Management (Create, Update, Deactivate)</li>
+            <li>✅ Category Management (CRUD operations)</li>
+            <li>✅ Department Management (CRUD operations)</li>
+            <li>✅ API Error Handling</li>
+            <li>✅ Real-time Data Updates</li>
+        </ul>
+
+        <h3>UI/UX Tests:</h3>
+        <ul>
+            <li>✅ Scrolling Functionality</li>
+            <li>✅ Modal Positioning & Behavior</li>
+            <li>✅ Form Validation & Styling</li>
+            <li>✅ Button & Input Classes</li>
+        </ul>
+    </div>
+
+    <h2>📊 Expected Results</h2>
+
+    <div class="success">
+        <h3>✅ All Tests Should Pass</h3>
+        <p>If the admin settings are working correctly, you should see:</p>
+        <ul>
+            <li>19/19 tests passing</li>
+            <li>Green checkmarks for all test items</li>
+            <li>Performance metrics (execution times)</li>
+            <li>Success toast notification</li>
+        </ul>
+    </div>
+
+    <div class="warning">
+        <h3>⚠️ If Tests Fail</h3>
+        <p>Common issues and solutions:</p>
+        <ul>
+            <li><strong>Authentication errors:</strong> Make sure you're logged in as admin</li>
+            <li><strong>API errors:</strong> Check that backend is running on port 8000</li>
+            <li><strong>Permission errors:</strong> Verify user has admin role in database</li>
+            <li><strong>UI errors:</strong> Check browser console for JavaScript errors</li>
+        </ul>
+    </div>
+
+    <h2>🛠️ Manual Testing</h2>
+
+    <div class="step">
+        <h3>Category Management</h3>
+        <ol>
+            <li>Go to Admin Settings → Categories tab</li>
+            <li>Click "Add Category" and fill the form</li>
+            <li>Edit a category by clicking "Edit"</li>
+            <li>Delete a category (ensure it has no documents)</li>
+            <li>Verify table scrolling with many categories</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h3>Department Management</h3>
+        <ol>
+            <li>Go to Admin Settings → Departments tab</li>
+            <li>Click "Add Department" and fill the form</li>
+            <li>Edit a department by clicking "Edit"</li>
+            <li>Delete a department (ensure no active employees)</li>
+            <li>Verify card layout responsiveness</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h3>User Management</h3>
+        <ol>
+            <li>Go to Admin Settings → Users tab</li>
+            <li>Click "Add User" and create a test user</li>
+            <li>Edit the user's role and details</li>
+            <li>Deactivate the user (not delete!)</li>
+            <li>Verify table scrolling and search functionality</li>
+        </ol>
+    </div>
+
+    <h2>🔍 Backend Verification</h2>
+
+    <div class="step">
+        <p>Check the Docker logs to verify operations:</p>
+        <ul>
+            <li>User operations: <code>docker-compose logs backend | grep "User"</code></li>
+            <li>Category operations: <code>docker-compose logs backend | grep "Category"</code></li>
+            <li>Department operations: <code>docker-compose logs backend | grep "Department"</code></li>
+        </ul>
+    </div>
+
+    <div class="success">
+        <h3>🎉 Success Indicators</h3>
+        <ul>
+            <li>All API calls return 200/201 status codes</li>
+            <li>Database records are created/updated/deactivated correctly</li>
+            <li>UI updates in real-time after operations</li>
+            <li>No console errors in browser developer tools</li>
+            <li>Toast notifications appear for all operations</li>
+        </ul>
+    </div>
+
+    <footer style="text-align: center; margin-top: 3rem; padding: 2rem; color: #666;">
+        <p>Department Portal Admin Settings Test Suite v1.0</p>
+        <p>This test verifies complete admin functionality for the portal system.</p>
+    </footer>
+</body>
+</html> 

@@ -27,6 +27,7 @@ urlpatterns = [
     path('assignments/<uuid:pk>/', views.EmployeeAssignmentDetailView.as_view(), name='assignment_detail'),
     path('assignments/<uuid:pk>/update/', views.EmployeeAssignmentUpdateView.as_view(), name='assignment_update'),
     path('assignments/<uuid:pk>/end/', views.end_assignment, name='assignment_end'),
+    path('employees/available/', views.available_employees, name='available_employees'),
     
     # Budgets
     path('budgets/', views.DepartmentBudgetListView.as_view(), name='budget_list'),
@@ -35,8 +36,34 @@ urlpatterns = [
     path('budgets/<uuid:pk>/update/', views.DepartmentBudgetUpdateView.as_view(), name='budget_update'),
     path('budgets/<uuid:pk>/approve/', views.approve_budget, name='budget_approve'),
     
-    # Reporting
-    path('reports/org-chart/', views.organization_chart, name='org_chart'),
+    # Permissions Management
+    path('permissions/', views.PermissionListView.as_view(), name='permission_list'),
+    path('permissions/grant/', views.grant_permission, name='permission_grant'),
+    path('permissions/<uuid:permission_id>/revoke/', views.revoke_permission, name='permission_revoke'),
+    path('permissions/entity/<str:entity_type>/<uuid:entity_id>/', views.entity_permissions, name='entity_permissions'),
+    path('permissions/report/', views.permission_report, name='permission_report'),
+    path('permissions/user/', views.UserPermissionsView.as_view(), name='user_permissions'),
+    
+    # Permission Templates
+    path('permissions/templates/', views.PermissionTemplateListView.as_view(), name='permission_template_list'),
+    path('permissions/templates/create/', views.create_permission_template, name='permission_template_create'),
+    path('permissions/templates/<uuid:template_id>/update/', views.update_permission_template, name='permission_template_update'),
+    path('permissions/templates/<uuid:template_id>/delete/', views.delete_permission_template, name='permission_template_delete'),
+    path('permissions/templates/<uuid:template_id>/apply/', views.apply_template_to_users, name='permission_template_apply'),
+    path('permissions/available/', views.get_available_permissions, name='available_permissions'),
+    
+    # Reports
+    path('reports/organization-chart/', views.organization_chart, name='organization_chart'),
     path('reports/performance/', views.performance_report, name='performance_report'),
     path('reports/budget-utilization/', views.budget_utilization_report, name='budget_utilization'),
+    
+    # System Settings
+    path('settings/', views.get_system_settings, name='get_system_settings'),
+    path('settings/update/', views.update_system_settings, name='update_system_settings'),
+    
+    # System Backups
+    path('backups/', views.list_system_backups, name='list_system_backups'),
+    path('backups/create/', views.create_system_backup, name='create_system_backup'),
+    path('backups/<uuid:backup_id>/download/', views.download_system_backup, name='download_system_backup'),
+    path('backups/<uuid:backup_id>/delete/', views.delete_system_backup, name='delete_system_backup'),
 ] 
