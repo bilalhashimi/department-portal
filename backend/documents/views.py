@@ -15,12 +15,12 @@ Department Portal - Document Views
 - Text-based search fallback: ✅ WORKING
 """
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, status, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.db.models import Q
+from django.db.models import Q, Count, Sum, Avg
 from django.utils import timezone
 from .models import (
     DocumentCategory, Document, DocumentTag, DocumentPermission,
@@ -36,10 +36,16 @@ from .serializers import (
 from .vector_service import vector_service
 from .tasks import index_document_task, delete_document_from_index
 from .ai_service import ai_assistant
+from .utils import user_has_permission
 import logging
 from accounts.permissions import (
     DocumentOwnerOrAdmin, DocumentSharePermission, log_security_event
 )
+from .permissions import (
+    HasDocumentPermission, CanCreateDocuments, CanViewAllDocuments, 
+    CanEditAllDocuments, CanDeleteAllDocuments, CanShareDocuments, CanApproveDocuments
+)
+from django.http import FileResponse, HttpResponse
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +104,7 @@ class DocumentTagDeleteView(generics.DestroyAPIView):
 # Documents
 class DocumentListView(generics.ListAPIView):
     serializer_class = DocumentListSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [CanViewAllDocuments]
     
     def get_queryset(self):
         user = self.request.user
@@ -109,45 +115,21 @@ class DocumentListView(generics.ListAPIView):
             is_latest_version=True
         )
         
-        # Apply permission filtering
+        # Admin can see all documents
         if user.role == 'admin':
             return queryset
+            
+        # Users with view_all permission can see all documents
+        if user_has_permission(user, 'documents.view_all'):
+            return queryset
         
-        # Filter by user permissions
-        user_accessible = Q(
-            permissions__user=user,
-            permissions__is_active=True
-        )
-        
-        # Filter by department permissions
-        user_departments = user.department_assignments.filter(
-            end_date__isnull=True
-        ).values_list('department', flat=True)
-        
-        dept_accessible = Q(
-            permissions__department__in=user_departments,
-            permissions__is_active=True
-        )
-        
-        # Documents owned by user
-        owned_by_user = Q(owned_by=user)
-        
-        # Public documents
-        public_docs = Q(category__is_public=True)
-        
-        return queryset.filter(
-            user_accessible | dept_accessible | owned_by_user | public_docs
-        ).distinct()
+        # Otherwise, only show documents they own or have explicit access to
+        return queryset.filter(owned_by=user)
 
 class DocumentCreateView(generics.CreateAPIView):
     queryset = Document.objects.all()
     serializer_class = DocumentCreateSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    
-    def post(self, request, *args, **kwargs):
-        # Allow all authenticated users to upload documents
-        # Remove the admin-only restriction
-        return super().post(request, *args, **kwargs)
+    permission_classes = [CanCreateDocuments]
     
     def perform_create(self, serializer):
         document = serializer.save()
@@ -161,12 +143,12 @@ class DocumentCreateView(generics.CreateAPIView):
 class DocumentDetailView(generics.RetrieveAPIView):
     queryset = Document.objects.all()
     serializer_class = DocumentDetailSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [CanViewAllDocuments]
 
 class DocumentUpdateView(generics.UpdateAPIView):
     queryset = Document.objects.all()
     serializer_class = DocumentUpdateSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [CanEditAllDocuments]
     
     def perform_update(self, serializer):
         document = serializer.save()
@@ -180,9 +162,18 @@ class DocumentUpdateView(generics.UpdateAPIView):
 class DocumentDeleteView(generics.DestroyAPIView):
     queryset = Document.objects.all()
     serializer_class = DocumentDetailSerializer  # Use detail serializer for delete
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [CanDeleteAllDocuments]
     
     def perform_destroy(self, instance):
+        # Log the deletion
+        log_security_event(
+            user=self.request.user,
+            action='delete_document',
+            resource=f"document:{instance.title}",
+            success=True,
+            details=f"Document {instance.id} deleted"
+        )
+        
         # Remove from search index if available
         try:
             delete_document_from_index.delay(str(instance.id))
@@ -431,8 +422,18 @@ def download_document(request, pk):
     try:
         document = Document.objects.get(pk=pk)
         
-        # Check if user has permission to download this document
-        # TODO: Add proper permission checking logic here
+        # Check if user has permission to view this document
+        if not (request.user.role == 'admin' or 
+                user_has_permission(request.user, 'documents.view_all') or
+                document.owned_by == request.user):
+            log_security_event(
+                user=request.user,
+                action='download_denied',
+                resource=f"document:{document.title}",
+                success=False,
+                details=f"User lacks view permission for document {document.id}"
+            )
+            return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
         
         # Check if file exists
         if not document.file:
@@ -455,7 +456,6 @@ def download_document(request, pk):
         )
         
         # Serve the file
-        from django.http import FileResponse
         import mimetypes
         
         # Get the file content
@@ -490,7 +490,17 @@ def preview_document(request, pk):
         document = Document.objects.get(pk=pk)
         
         # Check if user has permission to view this document
-        # TODO: Add proper permission checking logic here
+        if not (request.user.role == 'admin' or 
+                user_has_permission(request.user, 'documents.view_all') or
+                document.owned_by == request.user):
+            log_security_event(
+                user=request.user,
+                action='preview_denied',
+                resource=f"document:{document.title}",
+                success=False,
+                details=f"User lacks view permission for document {document.id}"
+            )
+            return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
         
         # Check if file exists
         if not document.file:
@@ -513,7 +523,6 @@ def preview_document(request, pk):
         )
         
         # Serve the file for inline viewing
-        from django.http import FileResponse
         import mimetypes
         
         # Get the file content
@@ -646,18 +655,36 @@ def submit_for_review(request, pk):
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def approve_document(request, pk):
-    """Approve a document"""
+    """Approve document (Admin/Manager only)"""
     try:
+        # Check if user has approval permission
+        if not (request.user.role == 'admin' or 
+                user_has_permission(request.user, 'documents.approve')):
+            log_security_event(
+                user=request.user,
+                action='approve_denied',
+                resource=f"document_id:{pk}",
+                success=False,
+                details="User lacks approve permission"
+            )
+            return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
+        
         document = Document.objects.get(pk=pk)
         document.status = 'approved'
-        document.reviewed_at = timezone.now()
-        document.reviewer = request.user
+        document.approved_by = request.user
+        document.approved_at = timezone.now()
         document.save()
         
-        # TEMPORARILY DISABLED - Re-enable when vector DB is restored
-        # index_document_task.delay(str(document.id))
+        # Log activity
+        DocumentActivity.objects.create(
+            document=document,
+            user=request.user,
+            action='approved',
+            ip_address=request.META.get('REMOTE_ADDR'),
+            user_agent=request.META.get('HTTP_USER_AGENT', '')
+        )
         
-        return Response({'message': 'Document approved'})
+        return Response({'message': 'Document approved successfully'})
     except Document.DoesNotExist:
         return Response({'error': 'Document not found'}, status=status.HTTP_404_NOT_FOUND)
 

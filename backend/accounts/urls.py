@@ -28,6 +28,9 @@ urlpatterns = [
     path('users/<uuid:pk>/update/', views.UserUpdateView.as_view(), name='user_update'),
     path('users/<uuid:user_id>/deactivate/', views.DeactivateUserView.as_view(), name='user_deactivate'),
     
+    # Permissions
+    path('users/permissions/', views.get_user_permissions, name='user_permissions'),
+    
     # Login History
     path('login-history/', views.LoginHistoryView.as_view(), name='login_history'),
     

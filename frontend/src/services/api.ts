@@ -259,6 +259,17 @@ class ApiService {
     }
   }
 
+  // Get current user's detailed permissions
+  async getCurrentUserPermissions(): Promise<any> {
+    try {
+      const response = await this.api.get('/accounts/users/permissions/');
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to get current user permissions:', error);
+      throw error;
+    }
+  }
+
   // Check if user has specific permission
   async hasPermission(permission: string): Promise<boolean> {
     try {

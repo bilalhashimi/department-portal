@@ -12,7 +12,9 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.db.models import Q, Count
 from django.contrib.auth.hashers import make_password, check_password
-import logging
+from django.core.mail import send_mail
+from django.conf import settings
+from django.utils.crypto import get_random_string
 from .models import User, UserProfile, LoginAttempt
 from .serializers import (
     UserSerializer, UserListSerializer, UserProfileSerializer,
@@ -20,6 +22,9 @@ from .serializers import (
     LoginAttemptSerializer, GroupSerializer, GroupMemberSerializer, GroupListSerializer
 )
 from .permissions import CanManageUsers
+from departments.models import Permission
+from documents.utils import user_has_permission
+import logging
 
 # Setup security logging
 security_logger = logging.getLogger('security')
@@ -826,3 +831,60 @@ def remove_user_from_group(request, group_id, user_id):
             {'error': 'User not found or inactive'},
             status=status.HTTP_404_NOT_FOUND
         )
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_user_permissions(request):
+    """Get current user's permissions for frontend authorization"""
+    user = request.user
+    
+    # Define all possible permissions
+    permission_map = {
+        'documents': {
+            'view_all': user_has_permission(user, 'documents.view_all'),
+            'create': user_has_permission(user, 'documents.create'),
+            'edit_all': user_has_permission(user, 'documents.edit_all'),
+            'delete_all': user_has_permission(user, 'documents.delete_all'),
+            'approve': user_has_permission(user, 'documents.approve'),
+            'share': user_has_permission(user, 'documents.share'),
+        },
+        'categories': {
+            'view_all': user_has_permission(user, 'categories.view_all'),
+            'create': user_has_permission(user, 'categories.create'),
+            'edit': user_has_permission(user, 'categories.edit'),
+            'delete': user_has_permission(user, 'categories.delete'),
+            'assign': user_has_permission(user, 'categories.assign'),
+        },
+        'departments': {
+            'view_all': user_has_permission(user, 'departments.view_all'),
+            'manage': user_has_permission(user, 'departments.manage'),
+            'assign_users': user_has_permission(user, 'departments.assign_users'),
+            'view_employees': user_has_permission(user, 'departments.view_employees'),
+        },
+        'users': {
+            'view_all': user_has_permission(user, 'users.view_all'),
+            'create': user_has_permission(user, 'users.create'),
+            'edit': user_has_permission(user, 'users.edit'),
+            'deactivate': user_has_permission(user, 'users.deactivate'),
+            'assign_roles': user_has_permission(user, 'users.assign_roles'),
+        },
+        'system': {
+            'admin_settings': user_has_permission(user, 'system.admin_settings'),
+            'view_analytics': user_has_permission(user, 'system.view_analytics'),
+            'manage_settings': user_has_permission(user, 'system.manage_settings'),
+            'backup': user_has_permission(user, 'system.backup'),
+        }
+    }
+    
+    # Add role-based information
+    user_info = {
+        'user_id': user.id,
+        'email': user.email,
+        'role': user.role,
+        'is_admin': user.role == 'admin',
+        'permissions': permission_map,
+        'timestamp': timezone.now().isoformat()
+    }
+    
+    return Response(user_info)
