@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../services/api';
+import { usePermissions } from '../contexts/PermissionsContext';
 
 interface SidebarProps {
   selectedView: string;
@@ -30,33 +31,18 @@ const Sidebar: React.FC<SidebarProps> = ({
   isMobile = false,
   documentCounts = { all: 0, important: 0, recent: 0, shared: 0, starred: 0, drafts: 0 }
 }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [canUpload, setCanUpload] = useState(false);
+  const { can } = usePermissions();
   const [categories, setCategories] = useState<Category[]>([]);
-  const [isLoadingCategories, setIsLoadingCategories] = useState(false);
 
-  // Check permissions when component mounts
-  useEffect(() => {
-    const checkPermissions = async () => {
-      try {
-        const adminStatus = await apiService.isAdmin();
-        const uploadPermission = await apiService.hasPermission('documents.create');
-        setIsAdmin(adminStatus);
-        setCanUpload(adminStatus || uploadPermission);
-      } catch (error) {
-        console.error('Error checking permissions:', error);
-        setIsAdmin(false);
-        setCanUpload(false);
-      }
-    };
-
-    checkPermissions();
-  }, []);
+  // Permission checks
+  const canCreateDocuments = can('documents.create');
+  const canViewCategories = can('categories.view_all');
 
   // Fetch categories from API
   useEffect(() => {
     const fetchCategories = async () => {
-      setIsLoadingCategories(true);
+      if (!canViewCategories) return; // Don't fetch if user can't view categories
+      
       try {
         console.log('🔄 Fetching categories for sidebar...');
         const fetchedCategories = await apiService.getCategories();
@@ -65,13 +51,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       } catch (error) {
         console.error('❌ Error fetching categories for sidebar:', error);
         setCategories([]);
-      } finally {
-        setIsLoadingCategories(false);
       }
     };
 
     fetchCategories();
-  }, []);
+  }, [canViewCategories]);
 
   // Restructured navigation with logical grouping
   const navigationSections = [
@@ -248,7 +232,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Primary Action Button */}
         <div className="flex-shrink-0 p-4 bg-gray-50 border-b border-gray-200">
-          {canUpload && (
+          {canCreateDocuments && (
             <button 
               onClick={onUploadClick}
               data-action="upload"
@@ -267,7 +251,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           WebkitOverflowScrolling: 'touch'
         }}>
           {/* Navigation Sections */}
-          {navigationSections.map((section, sectionIndex) => (
+          {navigationSections.map((section) => (
             <div key={section.title} className="p-3">
               {/* Section Header */}
               <div className="flex items-center space-x-2 mb-3 px-1">
@@ -281,9 +265,6 @@ const Sidebar: React.FC<SidebarProps> = ({
               <div className="space-y-1">
                 {section.items.map((item) => renderNavItem(item))}
               </div>
-              
-              {/* Add spacing between sections */}
-              {sectionIndex < navigationSections.length - 1 && <div className="mt-4"></div>}
             </div>
           ))}
 
@@ -341,7 +322,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     <div className="w-64 h-full bg-white border-r border-gray-200 flex flex-col overflow-hidden" data-component="sidebar">
       {/* Primary Action Button */}
       <div className="p-4 flex-shrink-0">
-        {canUpload && (
+        {canCreateDocuments && (
           <button 
             onClick={onUploadClick}
             data-action="upload"
@@ -357,7 +338,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Navigation Content - Scrollable */}
       <div className="flex-1 overflow-y-auto min-h-0">
         {/* Navigation Sections */}
-        {navigationSections.map((section, sectionIndex) => (
+        {navigationSections.map((section) => (
           <div key={section.title} className="px-2">
             {/* Section Header */}
             <h3 className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">

@@ -3643,3 +3643,389 @@
 [SECURITY] WARNING 2025-06-03 03:15:20,925 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
 [SECURITY] WARNING 2025-06-03 03:15:21,487 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
 [SECURITY] WARNING 2025-06-03 03:15:26,621 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:01,776 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:01,785 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:01,796 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:01,813 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:01,820 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:01,827 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:02,745 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:02,757 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:02,765 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:02,775 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:02,790 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:02,801 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:17,446 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:17,459 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:17,471 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:17,750 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:17,773 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:17,783 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:36,184 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:36,366 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:36,374 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:23:40,426 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:23,331 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:23,369 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:23,379 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:23,759 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:23,779 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:23,788 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:24,729 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:24,745 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:24,750 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:24,852 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:24,878 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:24,895 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:34,660 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:34,847 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:34,854 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:24:42,278 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:24:42,278 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:24:42,298 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] WARNING 2025-06-03 03:24:58,313 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:58,366 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:24:58,374 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:24:58,383 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] WARNING 2025-06-03 03:24:58,393 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:24:58,413 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] WARNING 2025-06-03 03:24:58,751 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:58,768 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:24:58,778 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:08,958 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:08,973 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:08,987 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:25:09,067 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:25:09,078 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:25:09,093 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] WARNING 2025-06-03 03:25:09,443 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:09,450 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:09,458 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:25:09,544 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:25:09,557 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:25:09,577 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] WARNING 2025-06-03 03:25:09,751 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:09,767 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:09,776 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:34,863 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:25:34,881 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:25:34,894 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:25:34,939 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:25:35,069 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] WARNING 2025-06-03 03:25:35,080 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:35,097 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:25:35,251 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:25:35,253 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:25:35,264 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:25:35,287 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:25:35,344 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] WARNING 2025-06-03 03:25:35,358 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:35,364 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:35,609 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:35,615 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:35,776 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:25:35,784 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:27:15,449 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:27:15,475 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:27:15,483 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:27:15,525 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:27:15,549 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:27:15,561 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:27:15,603 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:27:15,670 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] WARNING 2025-06-03 03:27:15,738 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:27:15,757 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:27:15,768 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:27:43,093 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] WARNING 2025-06-03 03:30:01,025 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:30:01,076 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:30:07,649 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:30:11,332 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:30:12,827 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:30,860 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:30,860 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:30,870 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:30,886 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:30,922 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:37,751 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:37,752 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:37,758 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:37,771 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:37,792 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:40,132 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:40,133 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:40,141 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:40,152 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:40,174 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:45,772 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:45,773 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:45,780 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:45,790 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:45,816 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:46,434 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:46,435 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:46,442 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:46,452 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:46,476 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:46,892 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:46,895 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:46,902 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:46,913 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:46,937 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:47,075 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:47,077 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:47,083 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:47,093 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:47,118 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:47,412 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:47,412 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:47,419 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:47,431 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:47,456 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:47,625 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:47,625 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:47,632 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:47,645 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:47,671 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:47,932 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:47,932 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:47,941 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:47,950 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:47,981 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:48,122 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:48,122 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:48,128 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:48,141 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:48,162 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:48,317 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:48,317 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:48,325 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:48,334 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:48,361 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:48,485 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:48,487 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:48,495 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:48,505 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:48,532 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:48,664 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:48,671 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:48,674 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:48,681 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:48,712 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:48,833 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:48,833 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:48,842 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:48,851 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:48,876 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:48,986 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:48,987 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:48,995 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:49,004 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:49,030 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:49,158 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:49,158 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:49,166 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:49,176 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:49,202 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:49,316 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:49,318 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:49,323 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:30:49,330 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:30:49,355 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:30:49,473 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:49,473 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] WARNING 2025-06-03 03:30:49,474 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:30:49,475 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:49,477 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] WARNING 2025-06-03 03:30:49,477 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:49,488 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] WARNING 2025-06-03 03:30:49,488 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:49,496 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/search/
+[SECURITY] WARNING 2025-06-03 03:30:49,497 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:49,858 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:30:49,858 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] WARNING 2025-06-03 03:30:49,860 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:30:49,860 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:49,866 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] WARNING 2025-06-03 03:30:49,866 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:49,872 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] WARNING 2025-06-03 03:30:49,872 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:49,879 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/search/
+[SECURITY] WARNING 2025-06-03 03:30:49,879 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:50,883 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:30:50,884 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] WARNING 2025-06-03 03:30:50,884 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:30:50,884 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:50,886 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] WARNING 2025-06-03 03:30:50,887 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:50,896 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] WARNING 2025-06-03 03:30:50,897 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:50,906 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/search/
+[SECURITY] WARNING 2025-06-03 03:30:50,906 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:30:58,869 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/auth/logout/
+[SECURITY] WARNING 2025-06-03 03:30:58,870 Rate limit exceeded for IP 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:31:14,634 Successful login: bilalhashimi89@gmail.com (role: admin) from 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:31:14,648 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:31:14,664 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:31:14,666 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:31:30,664 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:31:34,191 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:31:40,555 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:33:07,550 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:33:07,551 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:33:07,592 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:33:07,600 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:33:07,634 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:33:42,344 Successful login: ozair956@gmail.com (role: employee) from 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:33:42,399 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:33:42,405 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:34:45,621 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:34:45,621 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:34:45,639 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:34:45,646 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:34:45,675 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:34:52,500 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:34:52,511 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:34:52,617 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:34:52,622 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:34:52,629 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:34:52,637 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:34:52,732 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:35:41,186 Successful login: bilalhashimi89@gmail.com (role: admin) from 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:35:41,203 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:35:41,232 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:35:41,239 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:35:50,336 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/auth/logout/
+[SECURITY] WARNING 2025-06-03 03:36:02,864 Failed login attempt: bilalhashimi89@gmail.com from 192.168.65.1 - {'non_field_errors': [ErrorDetail(string='Invalid credentials', code='invalid')]}
+[SECURITY] WARNING 2025-06-03 03:36:02,865 Security Response 401: POST /api/v1/accounts/auth/login/ - User: Anonymous - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:36:08,063 Successful login: bilalhashimi89@gmail.com (role: admin) from 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:36:08,070 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:36:08,100 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:36:08,100 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:37:27,919 Successful login: bilalhashimi89@gmail.com (role: admin) from 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:37:27,929 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:37:27,975 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:37:27,978 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:40:10,955 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:40:10,965 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:40:10,970 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:40:10,978 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:40:11,003 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:40:11,006 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:40:11,012 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:40:11,177 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:40:11,196 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:40:11,340 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:40:11,397 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] ERROR 2025-06-03 03:40:21,841 JWT processing error: {'detail': ErrorDetail(string='User is inactive', code='authentication_failed'), 'code': ErrorDetail(string='user_inactive', code='authentication_failed')}
+[SECURITY] WARNING 2025-06-03 03:40:24,198 Security Response 404: GET /api/v1/accounts/is-admin/ - User: Anonymous - IP: 127.0.0.1
+[SECURITY] INFO 2025-06-03 03:41:46,677 Privileged access: test.user.1748893343573@company.com (role: admin) accessed /api/v1/accounts/is-admin/
+[SECURITY] INFO 2025-06-03 03:41:50,565 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:41:50,584 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:41:50,591 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:41:50,598 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:41:50,605 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:41:50,761 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:41:50,768 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:41:50,862 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:41:50,881 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:41:50,934 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:41:50,949 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:41:58,625 Privileged access: test.user.1748893343573@company.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:42:09,506 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:42:09,516 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:42:09,526 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:42:09,532 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:42:09,565 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:42:09,567 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:42:09,750 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:42:09,750 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:42:09,761 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:42:09,897 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:42:09,914 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:44:04,728 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:44:04,748 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:44:10,605 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:44:10,619 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:44:11,906 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:44:11,906 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:44:11,911 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] INFO 2025-06-03 03:44:11,943 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:44:11,950 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:44:11,979 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] INFO 2025-06-03 03:44:20,442 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:44:20,449 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:44:20,455 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:44:20,460 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:44:20,511 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:44:20,513 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:44:20,519 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:44:20,695 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:44:20,708 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:44:20,834 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:44:20,850 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:44:23,862 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:44:23,881 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:44:27,724 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:44:27,725 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:44:27,730 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] INFO 2025-06-03 03:44:27,760 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:44:27,769 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:44:27,795 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] INFO 2025-06-03 03:44:59,384 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/settings/
+[SECURITY] INFO 2025-06-03 03:44:59,385 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/profile/
+[SECURITY] INFO 2025-06-03 03:44:59,398 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/permissions/
+[SECURITY] INFO 2025-06-03 03:44:59,403 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:44:59,465 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:45:00,980 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/auth/logout/
+[SECURITY] INFO 2025-06-03 03:45:07,583 Successful login: ozair956@gmail.com (role: employee) from 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:45:07,624 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:45:07,636 Security Response 403: GET /api/v1/documents/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:45:30,478 Security Response 403: POST /api/v1/documents/create/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:45:32,698 Security Response 403: POST /api/v1/documents/create/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:45:39,551 Security Response 403: POST /api/v1/documents/create/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:45:44,291 Security Response 403: POST /api/v1/documents/create/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] WARNING 2025-06-03 03:45:47,006 Security Response 403: POST /api/v1/documents/create/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:46:03,322 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:46:03,322 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:46:03,355 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:46:13,539 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:46:13,555 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:46:15,268 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:46:15,300 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:46:16,164 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:46:16,182 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:46:16,999 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:46:17,019 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:46:18,632 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:46:18,661 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:46:35,997 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] INFO 2025-06-03 03:46:35,997 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:46:35,998 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:46:36,032 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:46:36,041 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:46:36,078 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] INFO 2025-06-03 03:46:36,913 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:46:36,945 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:46:49,924 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:46:49,926 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:46:49,926 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] INFO 2025-06-03 03:46:49,966 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:46:49,969 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:46:49,993 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] INFO 2025-06-03 03:46:58,485 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/grant/
+[SECURITY] INFO 2025-06-03 03:46:58,512 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/permissions/
+[SECURITY] WARNING 2025-06-03 03:47:03,330 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:47:27,730 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:47:27,754 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:47:27,769 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] INFO 2025-06-03 03:47:29,246 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:47:29,261 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/departments/
+[SECURITY] INFO 2025-06-03 03:47:53,751 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/create/
+[SECURITY] INFO 2025-06-03 03:47:53,806 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/
+[SECURITY] WARNING 2025-06-03 03:47:57,180 Security Response 403: GET /api/v1/departments/settings/ - User: ozair956@gmail.com (role: employee) - IP: 192.168.65.1
+[SECURITY] INFO 2025-06-03 03:48:12,960 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:48:12,978 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/documents/categories/
+[SECURITY] INFO 2025-06-03 03:48:14,140 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:48:14,175 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/
+[SECURITY] INFO 2025-06-03 03:48:48,680 Privileged access: bilalhashimi89@gmail.com (role: admin) accessed /api/v1/accounts/users/create/

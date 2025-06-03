@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { SearchResult } from '../services/api';
+import { usePermissions } from '../contexts/PermissionsContext';
 
 interface DocumentListProps {
   documents: SearchResult[];
@@ -96,7 +97,6 @@ const DocumentList: React.FC<DocumentListProps> = ({
   isMobile = false
 }) => {
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
-  const [hoveredDocument, setHoveredDocument] = useState<string | null>(null);
   const [confirmDialog, setConfirmDialog] = useState<{
     isOpen: boolean;
     title: string;
@@ -108,6 +108,13 @@ const DocumentList: React.FC<DocumentListProps> = ({
     message: '',
     onConfirm: () => {}
   });
+
+  // Get permissions
+  const { can } = usePermissions();
+  const canDelete = can('documents.delete_all');
+  const canDownload = can('documents.view_all'); // If they can view, they can download
+  const canEdit = can('documents.edit_all');
+  const canCreate = can('documents.create');
 
   const handleSelectDocument = (documentId: string) => {
     const newSelected = new Set(selectedDocuments);
@@ -140,6 +147,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
   };
 
   const handleBulkDelete = () => {
+    if (!canDelete) return;
     const count = selectedDocuments.size;
     setConfirmDialog({
       isOpen: true,
@@ -154,6 +162,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
   };
 
   const handleBulkDownload = () => {
+    if (!canDownload) return;
     const count = selectedDocuments.size;
     if (count > 5) {
       setConfirmDialog({
@@ -281,7 +290,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
       <div className="border-b border-gray-200 px-3 lg:px-6 py-3 bg-gray-50">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 lg:space-x-4">
-            {!isMobile && documents.length > 0 && (
+            {!isMobile && documents.length > 0 && (canDelete || canDownload) && (
               <div className="flex items-center">
                 <input
                   type="checkbox"
@@ -296,28 +305,32 @@ const DocumentList: React.FC<DocumentListProps> = ({
               </div>
             )}
             
-            {selectedDocuments.size > 0 && (
+            {selectedDocuments.size > 0 && (canDelete || canDownload) && (
               <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-sm border">
-                <button 
-                  className="btn-danger btn-sm flex items-center space-x-1"
-                  onClick={handleBulkDelete}
-                  aria-label={`Delete ${selectedDocuments.size} selected documents`}
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                  </svg>
-                  <span className="hidden sm:inline">Delete</span>
-                </button>
-                <button 
-                  className="btn-secondary btn-sm flex items-center space-x-1"
-                  onClick={handleBulkDownload}
-                  aria-label={`Download ${selectedDocuments.size} selected documents`}
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  <span className="hidden sm:inline">Download</span>
-                </button>
+                {canDelete && (
+                  <button 
+                    className="btn-danger btn-sm flex items-center space-x-1"
+                    onClick={handleBulkDelete}
+                    aria-label={`Delete ${selectedDocuments.size} selected documents`}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    <span className="hidden sm:inline">Delete</span>
+                  </button>
+                )}
+                {canDownload && (
+                  <button 
+                    className="btn-secondary btn-sm flex items-center space-x-1"
+                    onClick={handleBulkDownload}
+                    aria-label={`Download ${selectedDocuments.size} selected documents`}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span className="hidden sm:inline">Download</span>
+                  </button>
+                )}
                 <span className="text-sm text-gray-600 font-medium">
                   {selectedDocuments.size} selected
                 </span>
@@ -382,7 +395,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
             <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 max-w-md">
               <h4 className="font-medium text-blue-800 mb-2">💡 Quick Tips:</h4>
               <ul className="text-sm text-blue-700 space-y-1">
-                <li>• Upload documents using the "Upload Document" button</li>
+                {canCreate && <li>• Upload documents using the "Upload Document" button</li>}
                 <li>• Make sure documents are assigned to categories</li>
                 <li>• Check document status (draft, published, etc.)</li>
                 <li>• Try refreshing if you just created categories</li>
@@ -392,21 +405,23 @@ const DocumentList: React.FC<DocumentListProps> = ({
               <button className="btn-primary" onClick={onRefresh}>
                 🔄 Refresh
               </button>
-              <button className="btn-secondary" onClick={() => {
-                // Try to trigger upload modal
-                const uploadButton = document.querySelector('[data-action="upload"]') as HTMLButtonElement;
-                if (uploadButton) {
-                  uploadButton.click();
-                } else {
-                  // Fallback: scroll to sidebar
-                  const sidebar = document.querySelector('[data-component="sidebar"]');
-                  if (sidebar) {
-                    sidebar.scrollIntoView({ behavior: 'smooth' });
+              {canCreate && (
+                <button className="btn-secondary" onClick={() => {
+                  // Try to trigger upload modal
+                  const uploadButton = document.querySelector('[data-action="upload"]') as HTMLButtonElement;
+                  if (uploadButton) {
+                    uploadButton.click();
+                  } else {
+                    // Fallback: scroll to sidebar
+                    const sidebar = document.querySelector('[data-component="sidebar"]');
+                    if (sidebar) {
+                      sidebar.scrollIntoView({ behavior: 'smooth' });
+                    }
                   }
-                }
-              }}>
-                📁 Upload Document
-              </button>
+                }}>
+                  📁 Upload Document
+                </button>
+              )}
             </div>
           </div>
         ) : (
@@ -416,8 +431,6 @@ const DocumentList: React.FC<DocumentListProps> = ({
               className={`px-3 lg:px-6 py-4 lg:py-5 hover:bg-gray-50 active:bg-gray-100 cursor-pointer transition-all duration-200 group ${
                 selectedDocuments.has(result.document.id) ? 'bg-blue-50 border-l-4 border-blue-500' : ''
               }`}
-              onMouseEnter={() => !isMobile && setHoveredDocument(result.document.id)}
-              onMouseLeave={() => !isMobile && setHoveredDocument(null)}
               onClick={() => handleDocumentClick(result.document.id)}
               role="button"
               tabIndex={0}
@@ -430,8 +443,8 @@ const DocumentList: React.FC<DocumentListProps> = ({
               }}
             >
               <div className={`flex items-start ${isMobile ? 'space-x-3' : 'space-x-4'}`}>
-                {/* Desktop Checkbox */}
-                {!isMobile && (
+                {/* Desktop Checkbox - only show if user has delete or download permissions */}
+                {!isMobile && (canDelete || canDownload) && (
                   <input
                     type="checkbox"
                     checked={selectedDocuments.has(result.document.id)}
@@ -477,39 +490,45 @@ const DocumentList: React.FC<DocumentListProps> = ({
                       </div>
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex items-center space-x-2">
-                      {/* Star Button */}
-                      <button 
-                        className={`transition-all duration-200 p-2 rounded-full hover:bg-gray-100 ${
-                          result.document.priority === 'high' 
-                            ? 'text-yellow-500 hover:text-yellow-600' 
-                            : 'text-gray-300 hover:text-yellow-500'
-                        }`}
-                        onClick={(e) => handleStarClick(e, result.document.id)}
-                        title={result.document.priority === 'high' ? 'Remove bookmark' : 'Add bookmark'}
-                        aria-label={result.document.priority === 'high' ? 'Remove bookmark' : 'Add bookmark'}
-                      >
-                        <svg className={`${isMobile ? 'w-5 h-5' : 'w-5 h-5'}`} fill={result.document.priority === 'high' ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                        </svg>
-                      </button>
+                    {/* Action Buttons - only show if user has permissions */}
+                    {(canEdit || canDownload) && (
+                      <div className="flex items-center space-x-2">
+                        {/* Star Button - only show if user can edit */}
+                        {canEdit && (
+                          <button 
+                            className={`transition-all duration-200 p-2 rounded-full hover:bg-gray-100 ${
+                              result.document.priority === 'high' 
+                                ? 'text-yellow-500 hover:text-yellow-600' 
+                                : 'text-gray-300 hover:text-yellow-500'
+                            }`}
+                            onClick={(e) => handleStarClick(e, result.document.id)}
+                            title={result.document.priority === 'high' ? 'Remove bookmark' : 'Add bookmark'}
+                            aria-label={result.document.priority === 'high' ? 'Remove bookmark' : 'Add bookmark'}
+                          >
+                            <svg className={`${isMobile ? 'w-5 h-5' : 'w-5 h-5'}`} fill={result.document.priority === 'high' ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                            </svg>
+                          </button>
+                        )}
 
-                      {/* Download button */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onDocumentDownload?.(result.document.id);
-                        }}
-                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all duration-200"
-                        title="Download document"
-                        aria-label="Download document"
-                      >
-                        <svg className={`${isMobile ? 'w-5 h-5' : 'w-5 h-5'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                      </button>
-                    </div>
+                        {/* Download button - only show if user can download */}
+                        {canDownload && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onDocumentDownload?.(result.document.id);
+                            }}
+                            className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all duration-200"
+                            title="Download document"
+                            aria-label="Download document"
+                          >
+                            <svg className={`${isMobile ? 'w-5 h-5' : 'w-5 h-5'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* Enhanced Status Tags */}

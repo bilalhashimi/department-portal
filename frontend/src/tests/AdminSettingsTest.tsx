@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { apiService } from '../services/api';
 import toast from 'react-hot-toast';
 
@@ -280,7 +280,6 @@ const AdminSettingsTest: React.FC = () => {
     // Test 17: Modal Functionality
     await runTest('Modal Functionality', async () => {
       // Check if modal classes exist in CSS
-      const modals = document.querySelectorAll('[class*="fixed"][class*="inset-0"]');
       // Since modals are conditionally rendered, we check if the CSS classes work
       const testDiv = document.createElement('div');
       testDiv.className = 'fixed inset-0 bg-black bg-opacity-50';

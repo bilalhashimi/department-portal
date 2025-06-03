@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { apiService } from '../services/api';
 import LoadingSpinner from './LoadingSpinner';
 import toast from 'react-hot-toast';
+import { usePermissions } from '../contexts/PermissionsContext';
 
 // Category Management Component
 const CategoryManagement: React.FC = () => {
+  const { can, isAdmin } = usePermissions();
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -16,9 +18,19 @@ const CategoryManagement: React.FC = () => {
     color: '#3B82F6'
   });
 
+  // Permission checks - admins get all permissions automatically
+  const canViewCategories = isAdmin || can('categories.view_all');
+  const canCreateCategories = isAdmin || can('categories.create');
+  const canEditCategories = isAdmin || can('categories.edit');
+  const canDeleteCategories = isAdmin || can('categories.delete');
+
   useEffect(() => {
-    loadCategories();
-  }, []);
+    if (canViewCategories) {
+      loadCategories();
+    } else {
+      setLoading(false);
+    }
+  }, [canViewCategories]);
 
   const loadCategories = async () => {
     try {
@@ -33,10 +45,14 @@ const CategoryManagement: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!canCreateCategories && !canEditCategories) return;
+    
     try {
       if (editingCategory) {
+        if (!canEditCategories) return;
         await apiService.updateCategory(editingCategory.id, formData);
       } else {
+        if (!canCreateCategories) return;
         await apiService.createCategory(formData);
       }
       
@@ -50,6 +66,7 @@ const CategoryManagement: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
+    if (!canDeleteCategories) return;
     if (window.confirm('Are you sure you want to delete this category?')) {
       try {
         await apiService.deleteCategory(id);
@@ -61,6 +78,7 @@ const CategoryManagement: React.FC = () => {
   };
 
   const handleEdit = (category: any) => {
+    if (!canEditCategories) return;
     setEditingCategory(category);
     setFormData({
       name: category.name,
@@ -70,6 +88,16 @@ const CategoryManagement: React.FC = () => {
     });
     setShowModal(true);
   };
+
+  if (!canViewCategories) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-gray-400 text-4xl mb-4">🔒</div>
+        <h3 className="text-lg font-medium text-gray-900 mb-2">Access Denied</h3>
+        <p className="text-gray-500">You don't have permission to view categories</p>
+      </div>
+    );
+  }
 
   if (loading) return <LoadingSpinner />;
 
@@ -81,17 +109,19 @@ const CategoryManagement: React.FC = () => {
           <h3 className="text-lg font-semibold text-gray-900">Category Management</h3>
           <p className="text-sm text-gray-600 mt-1">Organize documents with categories</p>
         </div>
-        <button
-          onClick={() => {
-            setEditingCategory(null);
-            setFormData({ name: '', description: '', parent_category: '', color: '#3B82F6' });
-            setShowModal(true);
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center"
-        >
-          <span className="mr-2">➕</span>
-          Add Category
-        </button>
+        {canCreateCategories && (
+          <button
+            onClick={() => {
+              setEditingCategory(null);
+              setFormData({ name: '', description: '', parent_category: '', color: '#3B82F6' });
+              setShowModal(true);
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center"
+          >
+            <span className="mr-2">➕</span>
+            Add Category
+          </button>
+        )}
       </div>
 
       {/* Scrollable Content */}
@@ -103,16 +133,18 @@ const CategoryManagement: React.FC = () => {
                 <div className="text-gray-400 text-4xl mb-4">📁</div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No categories yet</h3>
                 <p className="text-gray-500 mb-4">Get started by creating your first document category</p>
-                <button
-                  onClick={() => {
-                    setEditingCategory(null);
-                    setFormData({ name: '', description: '', parent_category: '', color: '#3B82F6' });
-                    setShowModal(true);
-                  }}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  Create Category
-                </button>
+                {canCreateCategories && (
+                  <button
+                    onClick={() => {
+                      setEditingCategory(null);
+                      setFormData({ name: '', description: '', parent_category: '', color: '#3B82F6' });
+                      setShowModal(true);
+                    }}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  >
+                    Create Category
+                  </button>
+                )}
               </div>
             ) : (
               <div className="divide-y divide-gray-200">
@@ -140,18 +172,22 @@ const CategoryManagement: React.FC = () => {
                         <span className="text-xs text-gray-500">
                           {category.document_count || 0} documents
                         </span>
-                        <button
-                          onClick={() => handleEdit(category)}
-                          className="text-blue-600 hover:text-blue-800 text-sm"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(category.id)}
-                          className="text-red-600 hover:text-red-800 text-sm"
-                        >
-                          Delete
-                        </button>
+                        {canEditCategories && (
+                          <button
+                            onClick={() => handleEdit(category)}
+                            className="text-blue-600 hover:text-blue-800 text-sm"
+                          >
+                            Edit
+                          </button>
+                        )}
+                        {canDeleteCategories && (
+                          <button
+                            onClick={() => handleDelete(category.id)}
+                            className="text-red-600 hover:text-red-800 text-sm"
+                          >
+                            Delete
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -163,7 +199,7 @@ const CategoryManagement: React.FC = () => {
       </div>
 
       {/* Modal */}
-      {showModal && (
+      {showModal && (canCreateCategories || canEditCategories) && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <h3 className="text-lg font-semibold mb-4">
@@ -204,13 +240,12 @@ const CategoryManagement: React.FC = () => {
                   onChange={(e) => setFormData({ ...formData, parent_category: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="">No parent (root category)</option>
-                  {categories
-                    .filter(cat => !editingCategory || cat.id !== editingCategory.id)
-                    .map(cat => (
-                      <option key={cat.id} value={cat.id}>{cat.name}</option>
-                    ))
-                  }
+                  <option value="">No parent category</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
@@ -224,17 +259,17 @@ const CategoryManagement: React.FC = () => {
                   className="w-full h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div className="flex space-x-3 pt-4">
+              <div className="flex justify-end space-x-3 pt-4">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors"
+                  className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
                   {editingCategory ? 'Update' : 'Create'}
                 </button>
@@ -1480,7 +1515,6 @@ const PermissionsManagement: React.FC = () => {
   const [activePermissionTab, setActivePermissionTab] = useState('users');
   const [users, setUsers] = useState<any[]>([]);
   const [departments, setDepartments] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
   const [permissions, setPermissions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showPermissionModal, setShowPermissionModal] = useState(false);
@@ -1532,16 +1566,14 @@ const PermissionsManagement: React.FC = () => {
   const loadPermissionData = async () => {
     setLoading(true);
     try {
-      const [usersData, departmentsData, categoriesData, permissionsData] = await Promise.all([
+      const [usersData, departmentsData, permissionsData] = await Promise.all([
         apiService.getUsers(),
         apiService.getDepartments(),
-        apiService.getCategories(),
         apiService.getAllPermissions()
       ]);
       
       setUsers(usersData);
       setDepartments(departmentsData);
-      setCategories(categoriesData);
       setPermissions(permissionsData);
     } catch (error) {
       toast.error('Failed to load permission data');
@@ -1864,24 +1896,33 @@ const PermissionsManagement: React.FC = () => {
 
 // Main Admin Settings Component
 const AdminSettings: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('categories');
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { can, isAdmin } = usePermissions();
+  const [activeTab, setActiveTab] = useState('');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    checkAdminStatus();
-  }, []);
+  // Permission checks - but admins get everything automatically
+  const canManageCategories = isAdmin || can('categories.view_all');
+  const canManageDepartments = isAdmin || can('departments.manage');
+  const canManageUsers = isAdmin || can('users.view_all');
+  const canManagePermissions = isAdmin || can('system.admin_settings');
+  const canManageSystemSettings = isAdmin || can('system.manage_settings');
 
-  const checkAdminStatus = async () => {
-    try {
-      const adminStatus = await apiService.isAdmin();
-      setIsAdmin(adminStatus);
-    } catch (error) {
-      setIsAdmin(false);
-    } finally {
-      setLoading(false);
+  // Define available tabs based on permissions
+  const availableTabs = [
+    canManageCategories ? { id: 'categories', name: 'Categories', icon: '📁' } : null,
+    canManageDepartments ? { id: 'departments', name: 'Departments', icon: '🏢' } : null,
+    canManageUsers ? { id: 'users', name: 'Users', icon: '👥' } : null,
+    canManagePermissions ? { id: 'permissions', name: 'Permissions', icon: '🔐' } : null,
+    canManageSystemSettings ? { id: 'settings', name: 'System Settings', icon: '⚙️' } : null
+  ].filter((tab): tab is { id: string; name: string; icon: string } => tab !== null);
+
+  useEffect(() => {
+    // Set the first available tab as active
+    if (availableTabs.length > 0 && !activeTab) {
+      setActiveTab(availableTabs[0].id);
     }
-  };
+    setLoading(false);
+  }, [availableTabs, activeTab]);
 
   // Callback to refresh AI chat status when settings change
   const handleSettingsUpdate = () => {
@@ -1891,14 +1932,6 @@ const AdminSettings: React.FC = () => {
     }, 1500);
   };
 
-  const tabs = [
-    { id: 'categories', name: 'Categories', icon: '📁' },
-    { id: 'departments', name: 'Departments', icon: '🏢' },
-    { id: 'users', name: 'Users', icon: '👥' },
-    { id: 'permissions', name: 'Permissions', icon: '🔐' },
-    { id: 'settings', name: 'System Settings', icon: '⚙️' }
-  ];
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -1907,7 +1940,8 @@ const AdminSettings: React.FC = () => {
     );
   }
 
-  if (!isAdmin) {
+  // If user is admin, always allow access regardless of specific permissions
+  if (!isAdmin && availableTabs.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
@@ -1919,17 +1953,47 @@ const AdminSettings: React.FC = () => {
     );
   }
 
+  // If admin has no tabs (shouldn't happen), show a message
+  if (availableTabs.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="text-gray-400 text-6xl mb-4">⚙️</div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Loading Admin Features</h2>
+          <p className="text-gray-600">Please wait while we set up your admin access...</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 btn-primary"
+          >
+            Refresh Page
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-full flex flex-col max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <div className="flex-shrink-0 mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Admin Settings</h1>
-        <p className="text-gray-600 mt-1">Manage your portal's configuration and data</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Admin Settings</h1>
+            <p className="text-gray-600 mt-1">Manage your portal's configuration and data</p>
+          </div>
+          {isAdmin && (
+            <div className="flex items-center space-x-2 text-sm">
+              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium">
+                👑 Admin Access
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Tabs */}
       <div className="flex-shrink-0 border-b border-gray-200 mb-6">
         <nav className="-mb-px flex space-x-8 overflow-x-auto">
-          {tabs.map((tab) => (
+          {availableTabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
@@ -1948,11 +2012,11 @@ const AdminSettings: React.FC = () => {
 
       {/* Tab Content with proper scrolling */}
       <div className="flex-1 min-h-0">
-        {activeTab === 'categories' && <CategoryManagement />}
-        {activeTab === 'departments' && <DepartmentManagement />}
-        {activeTab === 'users' && <UserManagement />}
-        {activeTab === 'permissions' && <PermissionsManagement />}
-        {activeTab === 'settings' && <SystemSettings onSettingsUpdate={handleSettingsUpdate} />}
+        {activeTab === 'categories' && canManageCategories && <CategoryManagement />}
+        {activeTab === 'departments' && canManageDepartments && <DepartmentManagement />}
+        {activeTab === 'users' && canManageUsers && <UserManagement />}
+        {activeTab === 'permissions' && canManagePermissions && <PermissionsManagement />}
+        {activeTab === 'settings' && canManageSystemSettings && <SystemSettings onSettingsUpdate={handleSettingsUpdate} />}
       </div>
     </div>
   );

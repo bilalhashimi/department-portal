@@ -42,6 +42,7 @@ interface PermissionsContextType {
   permissions: UserPermissions | null;
   loading: boolean;
   error: string | null;
+  isAdmin: boolean;
   refreshPermissions: () => Promise<void>;
   can: (permission: string) => boolean;
 }
@@ -64,18 +65,30 @@ export const PermissionsProvider: React.FC<PermissionsProviderProps> = ({ childr
   const [permissions, setPermissions] = useState<UserPermissions | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const refreshPermissions = async () => {
     try {
       setLoading(true);
       setError(null);
       
+      // Check if user is admin first
+      const adminStatus = await apiService.isAdmin();
+      setIsAdmin(adminStatus);
+      
+      // Get permissions from API
       const response = await apiService.getCurrentUserPermissions();
       setPermissions(response.permissions);
+      
+      console.log('🔐 Permissions loaded:', {
+        isAdmin: adminStatus,
+        permissions: response.permissions
+      });
     } catch (err: any) {
       console.error('Failed to fetch permissions:', err);
       setError(err.message || 'Failed to fetch permissions');
       setPermissions(null);
+      setIsAdmin(false);
     } finally {
       setLoading(false);
     }
@@ -83,17 +96,34 @@ export const PermissionsProvider: React.FC<PermissionsProviderProps> = ({ childr
 
   // Helper function to check permissions with dot notation
   const can = (permission: string): boolean => {
-    if (!permissions) return false;
+    // Admin users have all permissions automatically
+    if (isAdmin) {
+      console.log(`🔓 Admin access granted for: ${permission}`);
+      return true;
+    }
+    
+    if (!permissions) {
+      console.log(`❌ No permissions loaded for: ${permission}`);
+      return false;
+    }
     
     const parts = permission.split('.');
-    if (parts.length !== 2) return false;
+    if (parts.length !== 2) {
+      console.log(`❌ Invalid permission format: ${permission}`);
+      return false;
+    }
     
     const [category, action] = parts;
     const categoryPerms = permissions[category as keyof UserPermissions];
     
-    if (!categoryPerms) return false;
+    if (!categoryPerms) {
+      console.log(`❌ Category not found: ${category} for permission: ${permission}`);
+      return false;
+    }
     
-    return (categoryPerms as any)[action] || false;
+    const hasPermission = (categoryPerms as any)[action] || false;
+    console.log(`🔍 Permission check: ${permission} = ${hasPermission}`);
+    return hasPermission;
   };
 
   useEffect(() => {
@@ -110,6 +140,7 @@ export const PermissionsProvider: React.FC<PermissionsProviderProps> = ({ childr
     permissions,
     loading,
     error,
+    isAdmin,
     refreshPermissions,
     can,
   };
