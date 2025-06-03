@@ -888,3 +888,15 @@ def get_user_permissions(request):
     }
     
     return Response(user_info)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def is_admin(request):
+    """Simple endpoint to check if current user is admin"""
+    user = request.user
+    return Response({
+        'is_admin': user.role == 'admin',
+        'role': user.role,
+        'user_id': user.id
+    })
